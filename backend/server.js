@@ -7,7 +7,20 @@ const connectDB = require("./config/db");
 const app = express();
 
 // --- middleware ---
-app.use(cors({ origin: process.env.CLIENT_URL || "*" }));
+app.use(cors({
+  origin: function (origin, callback) {
+    const allowed = [
+      "http://localhost:5173",
+      "https://selection.vishwaplyandhardware.com"
+    ];
+    if (!origin || allowed.includes(origin) || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: "8mb" })); // larger limit so base64 product images fit
 app.use(morgan("dev"));
 
