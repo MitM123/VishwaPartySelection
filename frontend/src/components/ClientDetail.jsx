@@ -12,6 +12,7 @@ export default function ClientDetail({ clientId, onBack, onEditClient, onDeleted
   const [selSearch, setSelSearch] = useState("");
   const [showSelForm, setShowSelForm] = useState(false);
   const [editSel, setEditSel] = useState(null);          // <-- selection being edited
+  const [viewSel, setViewSel] = useState(null);          // <-- selection shown in image viewer
 
   const loadClient = useCallback(async () => {
     const { data } = await fetchClient(clientId);
@@ -100,7 +101,12 @@ export default function ClientDetail({ clientId, onBack, onEditClient, onDeleted
                 <button className="tool edit" title="Edit" onClick={() => openEdit(s)}>✎</button>
                 <button className="tool del" title="Delete" onClick={() => removeSelection(s._id)}>✕</button>
               </div>
-              <div className="img" style={s.image ? { backgroundImage: `url('${s.image}')` } : {}}>
+              <div
+                className="img"
+                title="Click to view"
+                onClick={() => setViewSel(s)}
+                style={s.image ? { backgroundImage: `url('${s.image}')` } : {}}
+              >
                 {!s.image && (catIcon[s.category] || "📦")}
               </div>
               <div className="s-body">
@@ -126,6 +132,32 @@ export default function ClientDetail({ clientId, onBack, onEditClient, onDeleted
           onClose={closeForm}
           onSaved={() => { closeForm(); loadSelections(selSearch); notify(editSel ? "Selection updated" : "Selection added"); }}
         />
+      )}
+
+      {/* image + details viewer — opens when a selection image is clicked */}
+      {viewSel && (
+        <div className="overlay" onClick={() => setViewSel(null)}>
+          <div className="viewer" onClick={(e) => e.stopPropagation()}>
+            <button className="v-close" onClick={() => setViewSel(null)}>✕</button>
+            <div className="v-img">
+              {viewSel.image
+                ? <img src={viewSel.image} alt={viewSel.name} />
+                : (catIcon[viewSel.category] || "📦")}
+            </div>
+            <div className="v-body">
+              {viewSel.brand && <div className="v-br">{viewSel.brand}</div>}
+              <div className="v-nm">{viewSel.name}</div>
+              <div className="v-attrs">
+                {viewSel.thickness && <div className="v-attr"><span>Thickness</span><b>{viewSel.thickness}</b></div>}
+                {viewSel.color && <div className="v-attr"><span>Color</span><b>{viewSel.color}</b></div>}
+                {viewSel.category && <div className="v-attr"><span>Category</span><b>{viewSel.category}</b></div>}
+                {viewSel.quantity && <div className="v-attr"><span>Quantity</span><b>{viewSel.quantity}</b></div>}
+              </div>
+              {viewSel.remarks && <div className="v-rmk">“{viewSel.remarks}”</div>}
+              {viewSel.selectionDate && <div className="v-date">🗓 {fmt(viewSel.selectionDate)}</div>}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
