@@ -101,22 +101,23 @@ export default function ClientDetail({ clientId, onBack, onEditClient, onDeleted
                 <button className="tool edit" title="Edit" onClick={() => openEdit(s)}>✎</button>
                 <button className="tool del" title="Delete" onClick={() => removeSelection(s._id)}>✕</button>
               </div>
-              <div
-                className="img"
-                title="Click to view"
-                onClick={() => setViewSel(s)}
-                style={s.image ? { backgroundImage: `url('${s.image}')` } : {}}
-              >
-                {!s.image && (catIcon[s.category] || "📦")}
+
+              <div className="img" title="Click to view" onClick={() => setViewSel(s)}>
+                {s.image
+                  ? <img src={s.image} alt={s.name} />
+                  : <span className="ph">{catIcon[s.category] || "📦"}</span>}
               </div>
+
               <div className="s-body">
                 {s.brand && <div className="br">{s.brand}</div>}
                 <div className="nm">{s.name}</div>
+
                 <div className="attrs">
                   {[s.thickness, s.color, s.category, s.quantity].filter(Boolean).map((a, i) => (
                     <span className="attr" key={i}>{a}</span>
                   ))}
                 </div>
+
                 {s.remarks && <div className="rmk">“{s.remarks}”</div>}
                 {s.selectionDate && <div className="date">🗓 {fmt(s.selectionDate)}</div>}
               </div>

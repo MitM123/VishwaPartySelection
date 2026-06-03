@@ -31,13 +31,15 @@ export default function ClientList({ clients, search, setSearch, loading, onOpen
         <div className="list">
           {clients.map((c) => (
             <div key={c._id} className="client glass" onClick={() => onOpen(c._id)}>
-              <span className="count">{c.selectionCount} selection{c.selectionCount !== 1 ? "s" : ""}</span>
               <div className="row">
                 <div className="av">{initials(c.name)}</div>
-                <div>
+                <div className="c-meta">
                   <h3>{c.name}</h3>
                   <div className="mob">{c.mobile}</div>
                 </div>
+                <span className="count">
+                  {c.selectionCount} selection{c.selectionCount !== 1 ? "s" : ""}
+                </span>
               </div>
               {c.address && <div className="addr">📍 {c.address}</div>}
             </div>
