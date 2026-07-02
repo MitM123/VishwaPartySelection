@@ -8,7 +8,7 @@ const selectionSchema = new mongoose.Schema(
     name:      { type: String, required: true, trim: true },   // product name
     thickness: { type: String, trim: true, default: "" },
     color:     { type: String, trim: true, default: "" },
-    category:  { type: String, enum: ["Plywood", "Laminate", "Veneer", "Hardware", "Other"], default: "Plywood" },
+    category:  { type: String, enum: ["Plywood", "Laminate", "Veneer","Fevicol", "Hardware", "Other"], default: "Plywood" },
     quantity:  { type: String, trim: true, default: "" },
     remarks:   { type: String, trim: true, default: "" },
     image:     { type: String, default: "" },                  // base64 data URL or image URL
