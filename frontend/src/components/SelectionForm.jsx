@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { createSelection, updateSelection } from "../api";
 
+const categoryOptions = ["Plywood", "Laminate", "Veneer", "Fevicol", "Hardware", "Kitchen Accessories", "Wood", "Other"];
+
 export default function SelectionForm({ clientId, existing, onClose, onSaved }) {
   const [form, setForm] = useState({
     brand: "", name: "", thickness: "", color: "",
@@ -86,7 +88,9 @@ export default function SelectionForm({ clientId, existing, onClose, onSaved }) 
           <div className="two">
             <div className="field"><label>Category</label>
               <select value={form.category} onChange={set("category")}>
-                <option>Plywood</option><option>Laminate</option><option>Veneer</option><option>Hardware</option><option>Other</option>
+                {categoryOptions.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
             <div className="field"><label>Quantity</label><input value={form.quantity} onChange={set("quantity")} placeholder="e.g. 30 sheets" /></div>

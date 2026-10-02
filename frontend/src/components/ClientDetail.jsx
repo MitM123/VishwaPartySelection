@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { fetchClient, fetchSelections, deleteClient, deleteSelection } from "../api";
 import SelectionForm from "./SelectionForm";
 
-const catIcon = { Plywood: "🪵", Laminate: "🎨", Veneer: "🌳", Hardware: "🔩", Other: "📦", kitcheAccessories: "🍳", Wood: "" };
+const catIcon = { Plywood: "🪵", Laminate: "🎨", Veneer: "🌳", Fevicol: "🧴", Hardware: "🔩", "Kitchen Accessories": "🍳", Wood: "🪵", Other: "📦" };
 const initials = (n = "") => n.trim().split(/\s+/).map((x) => x[0]).slice(0, 2).join("").toUpperCase();
 const fmt = (d) => d ? new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
 
