@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createSelection, updateSelection } from "../api";
 
-const categoryOptions = ["Plywood", "Laminate", "Veneer", "Fevicol", "Hardware", "Kitchen Accessories", "Wood", "Other"];
+const categoryOptions = ["Plywood", "Laminate", "Veneer", "Fevicol", "Hardware", "ACP", "Wood", "Other"];
 
 export default function SelectionForm({ clientId, existing, onClose, onSaved }) {
   const [form, setForm] = useState({
